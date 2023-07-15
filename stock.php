@@ -73,7 +73,7 @@
                                     <td>jane@example.com</td>
                                     <td>Inactif</td>
                                 </tr>
-                                <!-- Ajoutez d'autres lignes du tableau ici -->
+
                             </tbody>
                         </table>
                     </div>
