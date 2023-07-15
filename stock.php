@@ -1,12 +1,8 @@
-<?php require_once "./includes/header.php";?>
-
-<header class="bg-dark text-white py-3">
-    <div class="container">
-        <h1 class="text-center">Dashboard</h1>
-    </div>
-</header>
-
-<?php require_once "./includes/navbar.php";?>
+<?php 
+    require_once "./includes/header.php";
+    require_once "./includes/projectName.php";
+    require_once "./includes/navbar.php";
+?>
 
 <main class="py-4">
     <div class="container">

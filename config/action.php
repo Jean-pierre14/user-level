@@ -98,35 +98,24 @@
         }
 
         }
-        // Fermer la connexion à la base de données
         mysqli_close($con);
     }
 
-    // Fonction pour mettre à jour le statut de l'utilisateur et rediriger vers la page index avec une session d'authentification
     function updateStatusAndRedirect($user_email, $new_status) {
-        global $con; // Récupérer la connexion à la base de données dans la fonction
-
-        // Mettre à jour le statut de l'utilisateur dans la base de données
+        global $con;
         $query = "UPDATE users SET `status` = ? WHERE email = ?";
         $stmt = mysqli_prepare($con, $query);
-        
+         
         if ($stmt) {
             mysqli_stmt_bind_param($stmt, "ss", $new_status, $user_email);
             mysqli_stmt_execute($stmt);
             mysqli_stmt_close($stmt);
         } else {
-            // Gérer l'erreur lors de la préparation de la requête
             echo "Erreur lors de la préparation de la requête : " . mysqli_error($con);
             exit;
         }
-
-        // Démarrer la session pour l'authentification
-        session_start();
-
-        // Mettre à jour la session pour le nouveau statut de l'utilisateur
         $_SESSION['user_status'] = $new_status;
 
-        // Rediriger vers la page index avec une session d'authentification
         header('Location: index.php');
         exit;
     } 

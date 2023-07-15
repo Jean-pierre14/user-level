@@ -35,3 +35,6 @@ VALUES
     ('user18', 'user18@example.com', 'active', MD5('password18'), NOW(), 'male'),
     ('user19', 'user19@example.com', 'active', MD5('password19'), NOW(), 'male'),
     ('user20', 'user20@example.com', 'active', MD5('password20'), NOW(), 'male');
+
+    ALTER TABLE users ADD COLUMN user_level VARCHAR(50) NOT NULL DEFAULT 'normal';
+

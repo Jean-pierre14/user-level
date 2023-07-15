@@ -17,6 +17,9 @@
                 <li class="nav-item <?php if ($_SERVER['PHP_SELF'] === '/user-level/stock.php') echo 'active'; ?>">
                     <a class="nav-link" href="stock.php">Stock</a>
                 </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="logout.php">Logout</a>
+                </li>
             </ul>
         </div>
     </div>
