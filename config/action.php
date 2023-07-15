@@ -1,8 +1,8 @@
 <?php
-    require_once "./db.config.php";
+    require_once "db.config.php";
 
     $output = "";
-    $error = array();
+    $errors = array();
     session_start();
 
     // Login action
@@ -37,7 +37,6 @@
                     header("Location: index.php");
                 }else{
                     array_push($errors, "Network error... please try again...");
-
                 }
             }
         }
