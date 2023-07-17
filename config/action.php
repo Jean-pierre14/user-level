@@ -22,100 +22,61 @@
             $password = md5($password);
 
             // Pass to database
-            $request = "SELECT * users WHERE username = '$username' AND password = '$password'";
+            $request = "SELECT * users WHERE username = '$username' AND `password` = '$password'";
             $exe = mysqli_query($con, $request);
 
-            // User validation
-            if($exe !== false && $exe instanceof mysqli_result){
-                $result = mysqli_num_rows($exe);
+            if(mysqli_num_rows($exe) == 1){
                 
-                $_SESSION = @mysqli_fetch_array($exe, MYSQLI_ASSOC);
-                
-                $email = $_SESSION['email'];
-                $connected = mysqli_query($con, "UPDATE users SET `status` = 'Online' WHERE email = '$email'");
+                $_SESSION = @mysqli_fetch_row($exe);
+                $_SESSION['login'] = "auth user";
+                $_SESSION['id'] = (int)$_SESSION['id'];
 
-                if($connected){
-                    $_SESSION['login'] = "Auth user";
-                    header("Location: index.php");
-                }else{
-                    array_push($errors, "Network error... please try again...");
-                }
+                header("Location: index.php");
             }else{
-                array_push($errors, "Username or password are incorrect");
-            }
-            
+                array_push($errors, "Username or password is incorrect");
+            } 
         }
     }
 
     // Registration
   
-    // Vérifier si le formulaire a été soumis
-    if (isset($_POST['registration'])) {
-
-        // Récupérer les données du formulaire soumis
+    if(isset($_POST['registration'])){
+        // Get data from form
         $username = mysqli_real_escape_string($con, trim(htmlentities($_POST['username'])));
         $email = mysqli_real_escape_string($con, trim(htmlentities($_POST['email'])));
-        $password = mysqli_real_escape_string($con, trim(htmlentities($_POST['password'])));
         $gender = mysqli_real_escape_string($con, trim(htmlentities($_POST['gender'])));
-        // Assurez-vous que le formulaire a un champ pour le genre.
+        $password = mysqli_real_escape_string($con, trim(htmlentities($_POST['password'])));
 
-        // Valider et nettoyer les données (vous pouvez implémenter votre propre validation ici)
-        if(empty($username)){array_push($errors, "Username is invalid");}
-        if(empty($email)){array_push($errors, "Email is invalid or incorrect");}
-        if(empty($gender)){array_push($errors, "Sexe is incorrect");}
-        if(empty($password)){array_push($errors, "Password is invalid");}
-        
+        // Validation
+        if(empty($username)){array_push($errors, "Username is empty");}
+        if(empty($email)){array_push($errors, "Email is empty or incorrect");}
+        if(empty($gender)){array_push($errors, "Gender is empty");}
+        if(empty($password)){array_push($errors, "Password is empty or incorrect");}
+
         if(count($errors) == 0){
-            // Crypter le mot de passe (utilisez Bcrypt ou une méthode de hachage sécurisée)
-        $hashedPassword = md5($password); // Notez que md5 est utilisé ici à des fins de démonstration, utilisez une méthode de hachage sécurisée dans un environnement réel.
 
-        // Préparer la requête d'insertion
-        $query = "INSERT INTO users (username, email, password, gender, status, created_at) VALUES (?, ?, ?, ?, 'active', NOW())";
+            $password = md5($password);
+            
+            $sql = "INSERT INTO users(username, email, gender, `password`) VALUES('$username', '$email', '$gender', '$password')";
 
-        // Utiliser la connexion existante à la base de données
-        $stmt = mysqli_prepare($con, $query);
-        
-        // Vérifier si la requête a été préparée avec succès
-        if ($stmt) {
-            // Lier les paramètres à la requête
-            mysqli_stmt_bind_param($stmt, "ssss", $username, $email, $hashedPassword, $gender);
+            $result = mysqli_query($con, $sql);
 
-            // Exécuter la requête
-            if (mysqli_stmt_execute($stmt)) {
-                 
-                $new_status = 'active'; 
-                updateStatusAndRedirect($email, $new_status);
-            } else {
-                // Gérer l'erreur lors de l'insertion
-                echo "<p class='alert alert-danger'>Erreur lors de l'enregistrement de l'utilisateur : </p>" . mysqli_error($con);
+            if($result){
+                header("Location: login.php");
             }
-
-            // Fermer la déclaration
-            mysqli_stmt_close($stmt);
-        } else {
-            // Gérer l'erreur lors de la préparation de la requête
-            echo "<p class='alert alert-danger'>Erreur lors de la préparation de la requête : </p>" . mysqli_error($con);
         }
-
-        }
-        mysqli_close($con);
     }
 
     function updateStatusAndRedirect($user_email, $new_status) {
         global $con;
-        $query = "UPDATE users SET `status` = ? WHERE email = ?";
-        $stmt = mysqli_prepare($con, $query);
-         
-        if ($stmt) {
-            mysqli_stmt_bind_param($stmt, "ss", $new_status, $user_email);
-            mysqli_stmt_execute($stmt);
-            mysqli_stmt_close($stmt);
-        } else {
-            echo "Erreur lors de la préparation de la requête : " . mysqli_error($con);
-            exit;
-        }
-        $_SESSION['user_status'] = $new_status;
+        $query = "UPDATE users SET `status` = '$new_status' WHERE email = $user_email";
+        $exe = mysqli_query($con, $query);
 
-        header('Location: index.php');
+        if($exe){
+            $_SESSION = mysqli_fetch_array($exe, MYSQLI_ASSOC);
+            $_SESSION['login'] = "Auth user";
+            header("Location: index.php");   
+        }
+        
         exit;
     } 

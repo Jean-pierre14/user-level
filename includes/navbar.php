@@ -1,3 +1,7 @@
+<?php 
+    session_start();
+?>
+
 <nav class="navbar navbar-expand-lg navbar-dark bg-dark  sticky-top">
     <div class="container">
         <a class="navbar-brand" href="#">Dashboard</a>
@@ -14,9 +18,11 @@
                     <a class="nav-link <?php if ($_SERVER['SCRIPT_NAME'] === '/user-level/profile.php') echo 'active'; ?>"
                         href="profile.php">Profile</a>
                 </li>
+                <?php if($_SESSION['user_level'] == 'admin'):?>
                 <li class="nav-item <?php if ($_SERVER['PHP_SELF'] === '/user-level/stock.php') echo 'active'; ?>">
                     <a class="nav-link" href="stock.php">Stock</a>
                 </li>
+                <?php endif;?>
                 <li class="nav-item">
                     <a class="nav-link" href="logout.php">Logout</a>
                 </li>
