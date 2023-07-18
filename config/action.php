@@ -19,22 +19,32 @@
         // Second level of validation
         if(count($errors) == 0){
             // Crypt the password
-            $password = md5($password);
+            $pass = md5($password);
 
             // Pass to database
-            $request = "SELECT * users WHERE username = '$username' AND `password` = '$password'";
-            $exe = mysqli_query($con, $request);
+            $sql = "SELECT * FROM users WHERE (username = '$username' AND `password` = '$pass')";
+            $result = mysqli_query($con, $sql);
 
-            if(mysqli_num_rows($exe) == 1){
+            if (!$result) {
+                die("Query execution failed: " . mysqli_error($con));
+            }
+            $num_row = mysqli_num_rows($result);
+
+            if($num_row == 1){
+                $_SESSION = @mysqli_fetch_array($result, MYSQLI_ASSOC);
+                $_SESSION['login'] = "Auth user";
                 
-                $_SESSION = @mysqli_fetch_row($exe);
-                $_SESSION['login'] = "auth user";
-                $_SESSION['id'] = (int)$_SESSION['id'];
-
-                header("Location: index.php");
+                $new_status = 'active';
+                $query = "UPDATE users SET `status` = '$new_status' WHERE email = '$email'";
+                $exe = mysqli_query($con, $query);
+                if($exe){
+                    header("Location: index.php");
+                }else{
+                    array_push($errors, "Error: SQL");
+                }
             }else{
-                array_push($errors, "Username or password is incorrect");
-            } 
+                array_push($errors, "Username or Password is incorrect");
+            }
         }
     }
 
@@ -66,17 +76,3 @@
             }
         }
     }
-
-    function updateStatusAndRedirect($user_email, $new_status) {
-        global $con;
-        $query = "UPDATE users SET `status` = '$new_status' WHERE email = $user_email";
-        $exe = mysqli_query($con, $query);
-
-        if($exe){
-            $_SESSION = mysqli_fetch_array($exe, MYSQLI_ASSOC);
-            $_SESSION['login'] = "Auth user";
-            header("Location: index.php");   
-        }
-        
-        exit;
-    } 

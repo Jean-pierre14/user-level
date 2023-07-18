@@ -1,8 +1,10 @@
-<?php require_once "./includes/header.php";?>
+<?php 
+    require_once "./includes/header.php";
+?>
 
 <div class="container py-5">
     <div class="row justify-content-center">
-        <div class="col-md-4">
+        <div class="col-md-4 mt-5">
             <div class="card card-body">
                 <h3>Login</h3>
                 <?php 
