@@ -2,10 +2,11 @@
     require_once "./includes/header.php";
     require_once "./includes/projectName.php";
     require_once "./includes/navbar.php";
+    require_once "./config/action.php";
 ?>
 
 <main class="py-4">
-    <div class="container">
+    <div class="container py-3">
         <div class="row">
             <div class="col-lg-4 mb-4">
                 <div class="card">
@@ -42,38 +43,21 @@
             </div>
         </div>
 
-        <div class="row">
-            <div class="col-lg-12 mb-4">
-                <div class="card">
-                    <div class="card-body">
-                        <h2 class="card-title">Tableau de bord</h2>
-                        <table class="table table-striped">
-                            <thead>
-                                <tr>
-                                    <th scope="col">ID</th>
-                                    <th scope="col">Nom</th>
-                                    <th scope="col">Email</th>
-                                    <th scope="col">Statut</th>
-                                </tr>
-                            </thead>
-                            <tbody>
-                                <tr>
-                                    <th scope="row">1</th>
-                                    <td>John Doe</td>
-                                    <td>john@example.com</td>
-                                    <td>Actif</td>
-                                </tr>
-                                <tr>
-                                    <th scope="row">2</th>
-                                    <td>Jane Smith</td>
-                                    <td>jane@example.com</td>
-                                    <td>Inactif</td>
-                                </tr>
-                                <!-- Ajoutez d'autres lignes du tableau ici -->
-                            </tbody>
-                        </table>
-                    </div>
+        <div class="row py-3">
+            <div class="col-md-5 mb-4">
+                <div class="card card-body shadow-sm">
+                    <h3>Last User</h3>
+                    <?php require_once "./components/User.component.php";?>
                 </div>
+            </div>
+            <div class="col-md-7 mb-4">
+                <div class="card card-body shadow-sm">
+                    <h3>Connected</h3>
+                    <?php require_once "./components/Connected.components.php";?>
+                </div>
+            </div>
+            <div class="col-md-4 mb-4">
+                <h3>Admin</h3>
             </div>
         </div>
     </div>

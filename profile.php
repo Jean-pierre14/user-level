@@ -8,12 +8,25 @@
     <div class="container">
         <div class="row py-5 justify-content-center">
             <div class="col-md-5 my-2">
-                <div class="card card-body">
+                <div class="mb-2 card card-body">
                     <h3>Profile</h3>
                     <p class="d-flex justify-content-between align-items-center">
                         <span>Username:</span>
                         <span><?= $_SESSION['username'];?></span>
                     </p>
+                </div>
+                <div class="my-2 card card-body">
+                    <h3>Password</h3>
+                    <form action="" method="post">
+                        <div class="form-group">
+                            <label for="password">Password</label>
+                            <input type="password" name="password" id="password" placeholder="Password"
+                                class="form-control">
+                        </div>
+                        <div class="form-group">
+                            <button type="submit" class="btn btn-primary">Update Password</button>
+                        </div>
+                    </form>
                 </div>
             </div>
 
@@ -47,21 +60,6 @@
                         </div>
                         <div class="form-group">
                             <button type="submit" class="btn btn-primary">Update profile</button>
-                        </div>
-                    </form>
-                </div>
-            </div>
-            <div class="col-md-10 my-2">
-                <div class="card card-body">
-                    <h3>Password</h3>
-                    <form action="" method="post">
-                        <div class="form-group">
-                            <label for="password">Password</label>
-                            <input type="password" name="password" id="password" placeholder="Password"
-                                class="form-control">
-                        </div>
-                        <div class="form-group">
-                            <button type="submit" class="btn btn-primary">Update Password</button>
                         </div>
                     </form>
                 </div>

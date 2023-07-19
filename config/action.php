@@ -3,7 +3,6 @@
 
     $output = "";
     $errors = array();
-    session_start();
 
     // Login action
     if(isset($_POST['login'])){
@@ -75,4 +74,47 @@
                 header("Location: login.php");
             }
         }
+    }
+
+    function AllUsers(){
+        global $con;
+        global $output;
+
+        $sql = mysqli_query($con, "SELECT * FROM users ORDER BY id_user DESC");
+        if(@mysqli_num_rows($sql) > 0){
+            $output .= '
+            <table class="table table-striped table-sm">
+                <thead>
+                    <tr>
+                        <th scope="col">ID</th>
+                        <th scope="col">Nom</th>
+                        <th scope="col">Email</th>
+                        <th scope="col">Statut</th>
+                        <th scope="col">Action</th>
+                    </tr>
+                </thead>
+                <tbody>';
+            while($row = mysqli_fetch_array($sql)){
+                $output .= '
+                    <tr>
+                        <th scope="row">'.$row['id_user'].'</th>
+                        <td>'.$row['username'].'</td>
+                        <td>'.$row['email'].'</td>
+                        <td>'.$row['status'].'</td>
+                        <td>
+                            <div class="btn btn-group">
+                                <button class="btn btn-sm btn-info">Edit</button>
+                                <button class="btn btn-sm btn-danger">Delete</button>
+                            </div>
+                        </td>
+                    </tr>
+                ';
+            }
+            $output .= '
+            </table>
+            </tbody>';
+        }else{
+            $output .= '<p class="alert alert danger">There is no data</p>';
+        }
+        return $output;
     }
