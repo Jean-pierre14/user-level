@@ -12,8 +12,7 @@
                 <div class="card">
                     <div class="card-body">
                         <h2 class="card-title">Tableau de bord</h2>
-                        
-                            <?= AllUsers();?>
+                        <?= AllUsers();?>
                         </table>
                     </div>
                 </div>

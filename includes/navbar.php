@@ -18,6 +18,10 @@
                     <a class="nav-link <?php if ($_SERVER['SCRIPT_NAME'] === '/user-level/profile.php') echo 'active'; ?>"
                         href="profile.php">Profile</a>
                 </li>
+                <li class="nav-item">
+                    <a class="nav-link <?php if ($_SERVER['SCRIPT_NAME'] === '/user-level/users.php') echo 'active'; ?>"
+                        href="users.php">Users</a>
+                </li>
                 <?php if($_SESSION['user_level'] == 'admin'):?>
                 <li class="nav-item <?php if ($_SERVER['PHP_SELF'] === '/user-level/stock.php') echo 'active'; ?>">
                     <a class="nav-link" href="stock.php">Stock</a>
