@@ -56,8 +56,16 @@
                     <?php require_once "./components/Connected.components.php";?>
                 </div>
             </div>
-            <div class="col-md-4 mb-4">
-                <h3>Admin</h3>
+        </div>
+
+        <div class="row py-3">
+            <div class="col-md-4">
+                <div class="card card-body shadow-sm">
+                    <h3>Admin</h3>
+                    <span class="progress">
+                        <span class="progress-bar" role="progressbar" style="width:35%">35%</span>
+                    </span>
+                </div>
             </div>
         </div>
     </div>
