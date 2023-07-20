@@ -9,37 +9,13 @@
     <div class="container py-3">
         <div class="row">
             <div class="col-lg-4 mb-4">
-                <div class="card">
-                    <div class="card-body">
-                        <h2 class="card-title">All users</h2>
-                        <p class="d-flex justify-content-between align-items-center">
-                            <span>Nombre:</span>
-                            <span>123345</span>
-                        </p>
-                    </div>
-                </div>
+                <?= AllUsersCount();?>
             </div>
             <div class="col-lg-4 mb-4">
-                <div class="card">
-                    <div class="card-body">
-                        <h2 class="card-title">Male</h2>
-                        <p class="d-flex justify-content-between align-items-center">
-                            <span>Nombre:</span>
-                            <span>123345</span>
-                        </p>
-                    </div>
-                </div>
+                <?= AllMale();?>
             </div>
             <div class="col-lg-4 mb-4">
-                <div class="card">
-                    <div class="card-body">
-                        <h2 class="card-title">Female</h2>
-                        <p class="d-flex justify-content-between align-items-center">
-                            <span>Nombre:</span>
-                            <span class="badge badge-primary">123345</span>
-                        </p>
-                    </div>
-                </div>
+                <?= AllFemale();?>
             </div>
         </div>
 
@@ -60,12 +36,7 @@
 
         <div class="row py-3">
             <div class="col-md-4">
-                <div class="card card-body shadow-sm">
-                    <h3>Admin</h3>
-                    <span class="progress">
-                        <span class="progress-bar" role="progressbar" style="width:35%">35%</span>
-                    </span>
-                </div>
+                <?= Admin();?>
             </div>
         </div>
     </div>

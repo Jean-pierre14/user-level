@@ -1,7 +1,7 @@
 <?php
     function LastUser(){
-        global $con;
-        global $output;
+        global $con, $output;
+        $output = "";
         
         $sql = mysqli_query($con, "SELECT username, id_user FROM users ORDER BY id_user DESC LIMIT 5");
         if(@mysqli_num_rows($sql) > 0){
