@@ -213,3 +213,5 @@
         }else{$output = '<p class="alert alert-warning">Error of network...</p>';}
         return $output;
     }
+
+    
