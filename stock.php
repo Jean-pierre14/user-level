@@ -7,69 +7,128 @@
 <main class="py-4">
     <div class="container">
         <div class="row">
-            <div class="col-lg-4 mb-4">
-                <div class="card">
-                    <div class="card-body">
-                        <h2 class="card-title">All users</h2>
-                        <p class="d-flex justify-content-between align-items-center">
-                            <span>Nombre:</span>
-                            <span>123345</span>
-                        </p>
-                    </div>
+            <div class="col-md-4">
+                <div class="card card-body shadow-md">
+                    <form action="" method="post">
+                        <div class="form-group">
+                            <label for="name">Name</label>
+                            <input type="text" name="name" id="name" placeholder="Enter the product name"
+                                class="form-control" />
+                        </div>
+                        <div class="form-group">
+                            <label for="quantity">Quantity</label>
+                            <input type="number" name="quantity" id="quantity" placeholder="Quantity" min="0" require
+                                class="form-control" />
+                        </div>
+                        <div class="form-group">
+                            <label for="unit_price">Unity price</label>
+                            <input type="number" name="unity_price" id="unity_price" placeholder="unite price"
+                                class="form-control" />
+                        </div>
+                        <div class="form-group">
+                            <label for="sell_price">Selling price</label>
+                            <input type="number" name="selling_price" id="selling_price" placeholder="Selling price"
+                                class="form-control" />
+                        </div>
+                        <div class="form-group my-3">
+                            <button type="submit" class="btn btn-primary btn">Save</button>
+                        </div>
+                    </form>
                 </div>
             </div>
-            <div class="col-lg-4 mb-4">
-                <div class="card">
-                    <div class="card-body">
-                        <h2 class="card-title">Male</h2>
-                        <p class="d-flex justify-content-between align-items-center">
-                            <span>Nombre:</span>
-                            <span>123345</span>
-                        </p>
-                    </div>
-                </div>
-            </div>
-            <div class="col-lg-4 mb-4">
-                <div class="card">
-                    <div class="card-body">
-                        <h2 class="card-title">Female</h2>
-                        <p class="d-flex justify-content-between align-items-center">
-                            <span>Nombre:</span>
-                            <span class="badge badge-primary">123345</span>
-                        </p>
-                    </div>
-                </div>
-            </div>
-        </div>
-
-        <div class="row">
-            <div class="col-lg-12 mb-4">
-                <div class="card">
-                    <div class="card-body">
-                        <h2 class="card-title">Tableau de bord</h2>
+            <div class="col-md-8">
+                <div class="card card-body shadow-md">
+                    <form action="" method="post">
+                        <input type="search" name="search" id="search" placeholder="Search..." class="form-control">
+                    </form>
+                    <div id="results" class="my-3">
                         <table class="table table-striped">
                             <thead>
                                 <tr>
-                                    <th scope="col">ID</th>
-                                    <th scope="col">Nom</th>
-                                    <th scope="col">Email</th>
-                                    <th scope="col">Statut</th>
+                                    <th>Name</th>
+                                    <th>Quantity</th>
+                                    <th>Unite Price</th>
+                                    <th>Selling Price</th>
+                                    <th>Shop</th>
+                                    <th>Actions</th>
                                 </tr>
                             </thead>
                             <tbody>
                                 <tr>
-                                    <th scope="row">1</th>
-                                    <td>John Doe</td>
-                                    <td>john@example.com</td>
-                                    <td>Actif</td>
+                                    <td>Jordan</td>
+                                    <td>23</td>
+                                    <td>15000</td>
+                                    <td>25000</td>
+                                    <td>
+                                        progress bar
+                                    </td>
+                                    <td>
+                                        <div class="btn-sm btn-group">
+                                            <button class="btn-sm btn-info btn">Edit</button>
+                                            <button class="btn-sm btn-danger btn">Delete</button>
+                                        </div>
+                                    </td>
                                 </tr>
                                 <tr>
-                                    <th scope="row">2</th>
-                                    <td>Jane Smith</td>
-                                    <td>jane@example.com</td>
-                                    <td>Inactif</td>
+                                    <td>Jordan</td>
+                                    <td>23</td>
+                                    <td>15000</td>
+                                    <td>25000</td>
+                                    <td>
+                                        progress bar
+                                    </td>
+                                    <td>
+                                        <div class="btn-sm btn-group">
+                                            <button class="btn-sm btn-info btn">Edit</button>
+                                            <button class="btn-sm btn-danger btn">Delete</button>
+                                        </div>
+                                    </td>
                                 </tr>
-
+                                <tr>
+                                    <td>Jordan</td>
+                                    <td>23</td>
+                                    <td>15000</td>
+                                    <td>25000</td>
+                                    <td>
+                                        progress bar
+                                    </td>
+                                    <td>
+                                        <div class="btn-sm btn-group">
+                                            <button class="btn-sm btn-info btn">Edit</button>
+                                            <button class="btn-sm btn-danger btn">Delete</button>
+                                        </div>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td>Jordan</td>
+                                    <td>23</td>
+                                    <td>15000</td>
+                                    <td>25000</td>
+                                    <td>
+                                        progress bar
+                                    </td>
+                                    <td>
+                                        <div class="btn-sm btn-group">
+                                            <button class="btn-sm btn-info btn">Edit</button>
+                                            <button class="btn-sm btn-danger btn">Delete</button>
+                                        </div>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td>Jordan</td>
+                                    <td>23</td>
+                                    <td>15000</td>
+                                    <td>25000</td>
+                                    <td>
+                                        progress bar
+                                    </td>
+                                    <td>
+                                        <div class="btn-sm btn-group">
+                                            <button class="btn-sm btn-info btn">Edit</button>
+                                            <button class="btn-sm btn-danger btn">Delete</button>
+                                        </div>
+                                    </td>
+                                </tr>
                             </tbody>
                         </table>
                     </div>
