@@ -44,3 +44,7 @@
 
         return $user;
     }
+
+    function addUser($data){
+        
+    }
