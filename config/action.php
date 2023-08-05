@@ -30,13 +30,17 @@
             $num_row = mysqli_num_rows($result);
 
             if($num_row == 1){
-                $_SESSION = @mysqli_fetch_array($result, MYSQLI_ASSOC);
-                $_SESSION['login'] = "Auth user";
+                
                 
                 $new_status = 'active';
                 $query = "UPDATE users SET `status` = '$new_status' WHERE email = '$email'";
                 $exe = mysqli_query($con, $query);
+
                 if($exe){
+                    session_start();
+                    $_SESSION = @mysqli_fetch_array($result, MYSQLI_ASSOC);
+                    $_SESSION['login'] = "Auth user";
+                
                     header("Location: index.php");
                 }else{
                     array_push($errors, "Error: SQL");
