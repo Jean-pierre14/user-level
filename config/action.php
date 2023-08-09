@@ -265,44 +265,31 @@
             $sql = mysqli_query($con, "SELECT * FROM stock ORDER BY id_stock DESC");
 
             if(@mysqli_num_rows($sql) > 0){
-                $output .= '
-                <table class="table table-sm  table-striped justify-content-center">
-                    <thead>
-                        <tr>
-                            <th>Name</th>
-                            <th>Quantity</th>
-                            <th>Unite Price</th>
-                            <th>Selling Price</th>
-                            <th>Shop</th>
-                            <th>Actions</th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                ';
                 while($row = mysqli_fetch_array($sql)){
                     $output .= '
-                    <tr class="align-items-center">
-                        <td>'.$row['nom'].'</td>
-                        <td>'.$row['nombre'].'</td>
-                        <td>'.$row['prix_unitaire'].'</td>
-                        <td>'.$row['prix_de_vente'].'</td>
-                        <td>
-                            <div class="progress">
-                                <div class="progress-bar" role="progressbar" style="width: 50%" aria-valuenow="50" aria-valuemin="0" aria-valuemax="100">50%</div>
+                    <div class="contentBox red">
+                        <div>
+                            <span>Name</span>
+                            <small>'.$row['nom'].'</small>
+                        </div>
+                        <div>
+                            <span>Prix unitaire</span>
+                            <small>'.$row['prix_unitaire'].'</small>
+                        </div>
+                        <div>
+                            <span>Prix de vente</span>
+                            <small>'.$row['prix_de_vente'].'</small>
+                        </div>
+                        <div class="last">
+                            <div class="btn-group">
+                            <a href="stock.php?get='.$row['id_stock'].'" class="btn btn-sm btn-primary">Edit</a>
+                            <a href="stock.php?delete='.$row['id_stock'].'" class="btn btn-sm btn-danger">Delete</a>
                             </div>
-                        </td>
-                        <td>
-                            <div class="btn-sm btn-group">
-                                <a href="stock.php?get='.$row['id_stock'].'" class="btn-sm btn-info btn">Edit</a>
-                                <a href="stock.php?delete='.$row['id_stock'].'" class="btn-sm btn-danger btn">Edit</a>
-                            </div>
-                        </td>
-                    </tr>
+                        </div>
+                        </div>
                     ';
                 }
-                $output .= '
-                    </tbody>
-                </table>';
+                
             }else{
                 $output = '<p class="alert alert-warning">You don\'t have data</p>';
             }
