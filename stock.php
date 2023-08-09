@@ -8,7 +8,7 @@
     <div class="container">
         <div class="row">
             <div class="col-md-3">
-                <div class="card card-body shadow-md">
+                <div class="card my-2 card-body shadow-md">
                     <?php 
                         require_once "./config/action.php";
                         require_once "./includes/error.php";
@@ -50,7 +50,7 @@
                 </div>
             </div>
             <div class="col-md-9">
-                <div class="card card-body shadow-md">
+                <div class="card my-2 card-body shadow-md">
                     <form action="" method="post">
                         <input type="search" name="search" id="search" placeholder="Search..." class="form-control">
                     </form>
