@@ -218,4 +218,133 @@
         return $output;
     }
 
+    function ValidationFields(){
+
+    }
+
+    if(isset($_POST['btnSave'])){
+
+        $id_user = mysqli_real_escape_string($con, htmlentities(trim($_POST['id_user'])));
+        $name = mysqli_real_escape_string($con, htmlentities(trim($_POST['name'])));
+        $quantity = mysqli_real_escape_string($con, htmlentities(trim($_POST['quantity'])));
+        $unity_price = mysqli_real_escape_string($con, htmlentities(trim($_POST['unity_price'])));
+        $selling_price = mysqli_real_escape_string($con, htmlentities(trim($_POST['selling_price'])));
+
+        if(empty($id_user)){header("Location: login.php");}
+        if(empty($name)){array_push($errors, "Name is empty");}
+        if(empty($quantity)){array_push($errors, "Quantity is empty");}
+        if(empty($unity_price)){array_push($errors, "unity price is empty");}
+        if(empty($selling_price)){array_push($errors, "Selling price is empty");}
+
+        if(count($errors) == 0){
+
+            $checkProduct = mysqli_query($con, "SELECT nom FROM stock WHERE nom = '$name'");
+            if(mysqli_num_rows($checkProduct) > 0){
+                $sql = mysqli_query($con, "UPDATE stock SET id_user = $id_user, nombre = $quantity, prix_unitaire = $unity_price, prix_de_vente = $selling_price WHERE nom = '$name'");
+                if($sql) {
+                    header("Location: stock.php");
+                }else{
+                    array_push($errors, "SQL UPDATE ERROR");
+                }
+            }else{
+                $sql = mysqli_query($con, "INSERT INTO `stock` (`id_stock`, `id_user`, `nom`, `prix_unitaire`, `nombre`, `prix_de_vente`, `created_at`) VALUES (NULL, $id_user, '$name', '$unity_price', '$quantity', '$selling_price', current_timestamp())");
+            
+                if($sql){
+                    header("Location: stock.php");
+                }else{
+                    array_push($errors, "SQL queries");
+                }
+            }
+            
+        }
+    }
     
+
+    if(isset($_POST['action'])){
+        if($_POST['action'] == 'fetch'){
+            $sql = mysqli_query($con, "SELECT * FROM stock ORDER BY id_stock DESC");
+
+            if(@mysqli_num_rows($sql) > 0){
+                $output .= '
+                <table class="table table-sm  table-striped justify-content-center">
+                    <thead>
+                        <tr>
+                            <th>Name</th>
+                            <th>Quantity</th>
+                            <th>Unite Price</th>
+                            <th>Selling Price</th>
+                            <th>Shop</th>
+                            <th>Actions</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                ';
+                while($row = mysqli_fetch_array($sql)){
+                    $output .= '
+                    <tr class="align-items-center">
+                        <td>'.$row['nom'].'</td>
+                        <td>'.$row['nombre'].'</td>
+                        <td>'.$row['prix_unitaire'].'</td>
+                        <td>'.$row['prix_de_vente'].'</td>
+                        <td>
+                            <div class="progress">
+                                <div class="progress-bar" role="progressbar" style="width: 50%" aria-valuenow="50" aria-valuemin="0" aria-valuemax="100">50%</div>
+                            </div>
+                        </td>
+                        <td>
+                            <div class="btn-sm btn-group">
+                                <a href="stock.php?get='.$row['id_stock'].'" class="btn-sm btn-info btn">Edit</a>
+                                <a href="stock.php?delete='.$row['id_stock'].'" class="btn-sm btn-danger btn">Edit</a>
+                            </div>
+                        </td>
+                    </tr>
+                    ';
+                }
+                $output .= '
+                    </tbody>
+                </table>';
+            }else{
+                $output = '<p class="alert alert-warning">You don\'t have data</p>';
+            }
+            print $output;
+        }
+
+        if($_POST['action'] == 'update'){
+
+            $id_user = mysqli_real_escape_string($con, htmlentities(trim($_POST['id_user'])));
+            $name = mysqli_real_escape_string($con, htmlentities(trim($_POST['name'])));
+            $quantity = mysqli_real_escape_string($con, htmlentities(trim($_POST['quantity'])));
+            $unity_price = mysqli_real_escape_string($con, htmlentities(trim($_POST['unity_price'])));
+            $selling_price = mysqli_real_escape_string($con, htmlentities(trim($_POST['selling_price'])));
+
+            if(empty($id_user)){header("Location: login.php");}
+            if(empty($name)){array_push($errors, "Name is empty");}
+            if(empty($quantity)){array_push($errors, "Quantity is empty");}
+            if(empty($unity_price)){array_push($errors, "unity price is empty");}
+            if(empty($selling_price)){array_push($errors, "Selling price is empty");}
+
+            
+        }
+    }
+
+    if(isset($_GET['get'])){
+        $id = mysqli_real_escape_string($con, htmlentities(trim($_GET['get'])));
+
+        if(empty($id)){
+            header("Location: stock.php");
+        }else{
+            $sql = mysqli_query($con, "SELECT * FROM stock WHERE id_stock = $id");
+            if(@mysqli_num_rows($sql) == 1){
+                $row = mysqli_fetch_assoc($sql);
+
+                $name = $row['nom'];
+                $unity_price = $row['prix_unitaire'];
+                $selling_price = $row['prix_de_vente'];
+                $quantity = $row['nombre'];
+                
+                $userId = $_SESSION['id_user'];
+            }else{
+                header("Location: stock.php");
+            }
+        }
+    }
