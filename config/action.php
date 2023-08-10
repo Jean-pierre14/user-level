@@ -261,6 +261,43 @@
     
 
     if(isset($_POST['action'])){
+        if($_POST['action'] == 'postStock'){
+            
+            $id_user = mysqli_real_escape_string($con, htmlentities(trim($_POST['id_user'])));
+            $name = mysqli_real_escape_string($con, htmlentities(trim($_POST['name'])));
+            $quantity = mysqli_real_escape_string($con, htmlentities(trim($_POST['quantity'])));
+            $unity_price = mysqli_real_escape_string($con, htmlentities(trim($_POST['unity_price'])));
+            $selling_price = mysqli_real_escape_string($con, htmlentities(trim($_POST['selling_price'])));
+
+            if(empty($id_user)){$output = "User Id is empty"; array_push($errors, "Error");}
+            if(empty($name)){$output = "Name is blank"; array_push($errors, "Error");}
+            if(empty($quantity)){$output = "Quantity is empty"; array_push($errors, "Error");}
+            if(empty($unity_price)){$output = "Price is empty"; array_push($errors, "Error");}
+            if(empty($selling_price)){$output = "Selling price is empty"; array_push($errors, "Error");}
+
+            if(count($errors) == 0){
+
+                $checkProduct = mysqli_query($con, "SELECT nom FROM stock WHERE nom = '$name'");
+                if(mysqli_num_rows($checkProduct) > 0){
+                    $sql = mysqli_query($con, "UPDATE stock SET id_user = $id_user, nombre = $quantity, prix_unitaire = $unity_price, prix_de_vente = $selling_price WHERE nom = '$name'");
+                    
+                    if($sql) {
+                        $output = "success";
+                    }else{
+                        $output = "SQL UPDATE ERROR";
+                    }
+                }else{
+                    $sql = mysqli_query($con, "INSERT INTO `stock` (`id_stock`, `id_user`, `nom`, `prix_unitaire`, `nombre`, `prix_de_vente`, `created_at`) VALUES (NULL, $id_user, '$name', '$unity_price', '$quantity', '$selling_price', current_timestamp())");
+                
+                    if($sql){
+                        $output = 'success';
+                    }else{
+                        $output = 'Error SQL';
+                    }
+                }
+            }
+            print $output;
+        }
         if($_POST['action'] == 'fetch'){
             $sql = mysqli_query($con, "SELECT * FROM stock ORDER BY id_stock DESC");
 
@@ -312,6 +349,41 @@
             
             print "success";
             
+        }
+
+        if($_POST['action'] == 'search'){
+            $txt = mysqli_real_escape_string($con, htmlentities(trim($_POST['search'])));
+            $sql = mysqli_query($con, "SELECT * FROM stock WHERE (nom LIKE '%$txt%' || prix_unitaire LIKE '%$txt%')");
+
+            if(@mysqli_num_rows($sql) > 0){
+                while($row = mysqli_fetch_array($sql)){
+                    $output .= '
+                    <div class="contentBox red">
+                        <div>
+                            <span>Name</span>
+                            <small>'.$row['nom'].'</small>
+                        </div>
+                        <div>
+                            <span>Prix unitaire</span>
+                            <small>'.$row['prix_unitaire'].'</small>
+                        </div>
+                        <div>
+                            <span>Prix de vente</span>
+                            <small>'.$row['prix_de_vente'].'</small>
+                        </div>
+                        <div class="last">
+                            <div class="btn-group">
+                            <a href="stock.php?get='.$row['id_stock'].'" class="btn btn-sm btn-primary">Edit</a>
+                            <a href="stock.php?delete='.$row['id_stock'].'" class="btn btn-sm btn-danger">Delete</a>
+                            </div>
+                        </div>
+                        </div>
+                    ';
+                }
+            }else{
+                $output = '<p class="alert alert-danger">There is not data found</p>';
+            }
+            print $output;
         }
     }
 

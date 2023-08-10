@@ -14,6 +14,7 @@
                         require_once "./includes/error.php";
                     ?>
                     <form action="" method="post" id="myFormStock">
+                        <div id="error"></div>
                         <div class="form-group">
                             <label for="name">Name</label>
                             <input type="hidden" name="id_user" value="<?= $_SESSION['id_user'];?>"
@@ -52,7 +53,7 @@
             </div>
             <div class="col-md-9">
                 <div class="card my-2 card-body shadow-md">
-                    <form action="" method="post">
+                    <form action="" method="post" id="searchForm">
                         <input type="search" name="search" id="search" placeholder="Search..." class="form-control">
                     </form>
                     <div id="results" class="my-3">
@@ -70,16 +71,70 @@
 
 <script>
 const results = document.getElementById("results"),
-    form = document.getElementById("myFormStock")
+    form = document.getElementById("myFormStock"),
+    btnSave = document.getElementById("btnSave"),
+    error = document.getElementById("error"),
+    searchForm = document.getElementById("searchForm")
 
 $(document).ready(function() {
     getAll();
-
+    setTimeout(function() {
+        document.getElementById("ErrorMessage").style.display = "none"
+    }, 3000)
 })
 
+const search = document.getElementById("search")
+
+search.onkeyup = (event) => {
+    let txt = event.target.value.trim()
+    if (txt != "") {
+        results.innerHTML = ''
+        let xhr = new XMLHttpRequest()
+        xhr.onload = () => {
+            if (xhr.readyState === XMLHttpRequest.DONE) {
+                if (xhr.status === 200) {
+                    let data = xhr.response
+                    results.innerHTML = data
+                }
+            }
+        }
+        let formData = new FormData(searchForm)
+        formData.append("action", "search")
+        xhr.open("POST", "./config/action.php", true)
+        xhr.send(formData)
+    } else {
+        getAll()
+    }
+}
+
+form.onsubmit = (event) => {
+    event.preventDefault()
+}
+
+btnSave.onclick = () => {
+    let xhr = new XMLHttpRequest()
+    xhr.onload = () => {
+        if (xhr.readyState === XMLHttpRequest.DONE) {
+            if (xhr.status === 200) {
+                let data = xhr.response
+                if (data === 'success') {
+                    form.reset();
+                    error.innerHTML = `<p class="alert alert-success" id="ErrorMessage">Data registered :)</p>`
+                    getAll();
+                } else {
+                    error.innerHTML = `<p class="alert alert-danger" id="ErrorMessage">${data}</p>`
+                }
+            }
+        }
+    }
+    let formData = new FormData(form),
+        action = "postStock";
+    formData.append("action", action)
+    xhr.open("POST", "./config/action.php", true)
+    xhr.send(formData)
+}
+
 const btnUpdate = document.getElementById("updateBtn")
-
-
 btnUpdate.onclick = () => {
 
     let xhr = new XMLHttpRequest()
@@ -90,7 +145,7 @@ btnUpdate.onclick = () => {
                 if (data === 'success') {
                     location.href = `stock.php`
                 } else {
-                    error.innerHTML = `<p>${data}</p>`;
+                    error.innerHTML = `<p class="alert alert-danger" id="ErrorMessage">${data}</p>`;
                 }
             }
         }
@@ -102,8 +157,6 @@ btnUpdate.onclick = () => {
     xhr.open("POST", "./config/action.php", true)
     xhr.send(formData)
 }
-
-
 
 function getAll() {
     let xhr = new XMLHttpRequest()
