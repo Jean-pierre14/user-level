@@ -6,7 +6,7 @@
 
 .contentBox {
   display: grid;
-  width: 95%;
+  width: 98%;
   margin: 10px auto;
   padding: 20px 10px;
   border-radius: 0.4rem;
@@ -15,6 +15,20 @@
   border: 1px solid #cccccc8c;
   user-select: none;
   transition: all ease 0.5s;
+}
+
+@media (max-width: 760px) {
+  .contentBox {
+    display: grid;
+    grid-template-columns: 1fr;
+    align-items: center;
+    justify-content: center;
+    text-align: center;
+  }
+  .contentBox > div {
+    display: block;
+    margin: 10px auto;
+  }
 }
 .contentBox:hover,
 .contentBox:focus,
@@ -38,6 +52,15 @@
 
 .contentBox > div span {
   display: block;
+}
+
+.contentBox > div small {
+  padding: 3px 5px;
+  border-radius: 0.8rem;
+  background: rgb(61, 61, 220);
+  color: #fff;
+  font-size: 13px;
+  font-weight: 600;
 }
 
 #results {

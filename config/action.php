@@ -309,7 +309,8 @@
             if(empty($quantity)){array_push($errors, "Quantity is empty");}
             if(empty($unity_price)){array_push($errors, "unity price is empty");}
             if(empty($selling_price)){array_push($errors, "Selling price is empty");}
-
+            
+            print "success";
             
         }
     }

@@ -40,7 +40,8 @@
                         </div>
                         <div class="form-group my-3">
                             <?php if(isset($_GET['get'])):?>
-                            <button type="submit" name="update" id="update" class="btn btn-warning btn">Update</button>
+                            <button type="submit" name="update" id="updateBtn"
+                                class="btn btn-warning btn">Update</button>
                             <?php else:?>
                             <button type="submit" name="btnSave" id="btnSave" class="btn btn-primary btn">Save</button>
                             <?php endif;?>
@@ -68,11 +69,41 @@
 <?php require_once "./includes/footer.php";?>
 
 <script>
-const results = document.getElementById("results")
+const results = document.getElementById("results"),
+    form = document.getElementById("myFormStock")
 
 $(document).ready(function() {
     getAll();
+
 })
+
+const btnUpdate = document.getElementById("updateBtn")
+
+
+btnUpdate.onclick = () => {
+
+    let xhr = new XMLHttpRequest()
+    xhr.onload = () => {
+        if (xhr.readyState === XMLHttpRequest.DONE) {
+            if (xhr.status === 200) {
+                let data = xhr.response
+                if (data === 'success') {
+                    location.href = `stock.php`
+                } else {
+                    error.innerHTML = `<p>${data}</p>`;
+                }
+            }
+        }
+    }
+    let action = 'update'
+    let formData = new FormData()
+    formData.append("action", action)
+
+    xhr.open("POST", "./config/action.php", true)
+    xhr.send(formData)
+}
+
+
 
 function getAll() {
     let xhr = new XMLHttpRequest()
