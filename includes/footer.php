@@ -3,7 +3,7 @@
         <div class="row justify-content-center py-5">
             <div class="col-md-4">
                 <p class="text-center">
-                    copyright &copy; <?= Date('Y');?>
+                    copyright Racine14Creator <sup>&copy;</sup> <?= Date('Y');?>
                 </p>
             </div>
         </div>
