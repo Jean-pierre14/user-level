@@ -56,9 +56,9 @@
                     <form action="" method="post" id="searchForm">
                         <input type="search" name="search" id="search" placeholder="Search..." class="form-control">
                     </form>
-                    <div id="results" class="my-3">
-                        Loading...
-                    </div>
+                </div>
+                <div id="results" class="my-3">
+                    Loading...
                 </div>
             </div>
         </div>
@@ -74,7 +74,12 @@ const results = document.getElementById("results"),
     form = document.getElementById("myFormStock"),
     btnSave = document.getElementById("btnSave"),
     error = document.getElementById("error"),
-    searchForm = document.getElementById("searchForm")
+    searchForm = document.getElementById("searchForm"),
+    editButton = document.querySelector(".editBtn")
+
+editButton.onclick = () => {
+    editEvent
+}
 
 $(document).ready(function() {
     getAll();
