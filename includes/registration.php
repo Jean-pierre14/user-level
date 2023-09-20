@@ -16,7 +16,16 @@
                     if(empty($gender)){array_push($errors, "Gender field is empty");}
 
                     if(count($errors) == 0){
-                        $sql = mysqli_query($con, "SELECT email FROM")
+                        $sql = mysqli_query($con, "SELECT * FROM users WHERE username = '$username'");
+                        $row = mysqli_fetch_row($sql);
+                        
+                        if($username = $row['username']){array_push($errors, "This username is taken");}
+                        if($email = $row['email']){array_push($errors, "This email is taken");}
+
+                        if(count($errors) == 0){
+                            
+                        }
+
                     }
                 }
                 require_once "./includes/error.php";
