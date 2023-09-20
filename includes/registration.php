@@ -2,6 +2,26 @@
     <div class="col-md-7 col-sm-10">
         <div class="card card-body">
             <h3>Register new User</h3>
+            <?php 
+                
+
+                if(isset($_POST['register'])){
+                    $name = mysqli_real_escape_string($con, htmlentities(trim($_POST['name'])));
+                    $email = mysqli_real_escape_string($con, htmlentities(trim($_POST['email'])));
+                    $gender = mysqli_real_escape_string($con, htmlentities(trim($_POST['gender'])));
+                    $passowrd = $_POST['password'];
+
+                    if(empty($name)){array_push($errors, "Name field is empty");}
+                    if(empty($email)){array_push($errors, "E-mail field is empty");}
+                    if(empty($gender)){array_push($errors, "Gender field is empty");}
+
+                    if(count($errors) == 0){
+                        $sql = mysqli_query($con, "SELECT email FROM")
+                    }
+                }
+                require_once "./includes/error.php";
+            ?>
+
             <form action="" method="post">
                 <div class="form-row">
                     <div class="form-group col-md-6">
@@ -25,7 +45,7 @@
                 </div>
 
                 <div class="form-group my-3">
-                    <button type="submit" class="btn btn-primary">Register</button>
+                    <button type="submit" name="register" class="btn btn-primary">Register</button>
                 </div>
             </form>
         </div>
