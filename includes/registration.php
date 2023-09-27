@@ -9,13 +9,14 @@
                     $name = mysqli_real_escape_string($con, htmlentities(trim($_POST['name'])));
                     $email = mysqli_real_escape_string($con, htmlentities(trim($_POST['email'])));
                     $gender = mysqli_real_escape_string($con, htmlentities(trim($_POST['gender'])));
-                    $passowrd = $_POST['password'];
+                    $password = $_POST['password'];
 
                     if(empty($name)){array_push($errors, "Name field is empty");}
                     if(empty($email)){array_push($errors, "E-mail field is empty");}
                     if(empty($gender)){array_push($errors, "Gender field is empty");}
 
                     if(count($errors) == 0){
+                        
                         $sql = mysqli_query($con, "SELECT * FROM users WHERE username = '$username'");
                         $row = mysqli_fetch_row($sql);
                         
